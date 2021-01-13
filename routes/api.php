@@ -35,7 +35,7 @@ Route::get('/test', function() {
 
 } catch(RequestException $e) {
 
-    $response = ($e->hasResponse()) ? $e->getResponse() : 'sending data failed';
+    $response = ($e->hasResponse()) ? $e->getResponse() : 'getting data failed';
     $statuscode = $response->getStatusCode();
     $body = $response->getBody();
 
