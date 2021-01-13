@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\TestController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,15 +20,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test', function() {
-   $response = Http::withBasicAuth('applicant', 'canCode')->get('https://www.axxess.co.za/careers/dev-test-instructions');
-
-
-  if ($response->getStatusCode() == 200) { 
-    $response_data = $response->getBody()->getContents();
-    echo $response_data;
-}
-
-
-}); 
 
