@@ -23,12 +23,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 try{
 
 Route::get('/test', function() {
-   $response = Http::withBasicAuth('applicant', 'canCode')->get('https://www.axxess.co.za/careers/dev-test-instructions');
+   $response = Http::withBasicAuth('applicant', 'canCode')
+   ->get('https://www.axxess.co.za/careers/dev-test-instructions');
 
 
         if ($response->getStatusCode() == 200) { 
-            $response_data = $response->getBody();
-            echo $response_data;
+            echo $response->getBody();
+            
         }
 }); 
 
@@ -52,18 +53,16 @@ Route::get('/test', function() {
 
 try{
 Route::get('/postinfo', function() {
-$response = Http::withBasicAuth('applicant', 'canCode')
-    ->withHeaders([
-    'Content-type' => 'application/json'])
+ $response = Http::withBasicAuth('applicant', 'canCode')
     ->post('https://www.axxess.co.za/careers/download-dev-test', [
-    
+
     'first_name' => 'Phenyo',
     'last_name' => 'Mokgadi', 
     'mobile_number' => '0720549583',
     'email_address' => 'phenyo.legend@gmail.com',
-]);
+]); 
 
-   echo $response->getBody();
+   echo  $response->body();
 });
 } catch (RequestException $e) {
 
