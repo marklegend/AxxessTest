@@ -20,20 +20,37 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+try{
 
 Route::get('/test', function() {
    $response = Http::withBasicAuth('applicant', 'canCode')->get('https://www.axxess.co.za/careers/dev-test-instructions');
 
 
-  if ($response->getStatusCode() == 200) { 
-    $response_data = $response->getBody();
-    echo $response_data;
-}
-
-
-
+        if ($response->getStatusCode() == 200) { 
+            $response_data = $response->getBody();
+            echo $response_data;
+        }
 }); 
 
+
+} catch(RequestException $e) {
+
+    $response = ($e->hasResponse()) ? $e->getResponse() : 'sending data failed';
+    $statuscode = $response->getStatusCode();
+    $body = $response->getBody();
+
+    Log::error($body);
+
+        return [
+            'success' => false,
+            'status_code' => $statuscode,
+            'body' => $body ?? null,
+        ];
+
+};
+
+
+try{
 Route::get('/postinfo', function() {
 $response = Http::withBasicAuth('applicant', 'canCode')
     ->withHeaders([
@@ -48,3 +65,18 @@ $response = Http::withBasicAuth('applicant', 'canCode')
 
    echo $response->getBody();
 });
+} catch (RequestException $e) {
+
+    $response = ($e->hasResponse()) ? $e->getResponse() : 'sending data failed';
+    $statuscode = $response->getStatusCode();
+    $body = $response->getBody();
+
+    Log::error($body);
+
+        return [
+            'success' => false,
+            'status_code' => $statuscode,
+            'body' => $body ?? null,
+        ];
+    };
+
